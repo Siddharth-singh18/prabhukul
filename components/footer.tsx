@@ -14,10 +14,10 @@ export function Footer() {
         <div>
           <p className="font-medium text-gold">Quick Links</p>
           <div className="mt-4 grid gap-2 text-sm text-white/65">
-            <a href="#story">Our Story</a>
-            <a href="#products">Products</a>
-            <a href="#journal">Journal</a>
-            <a href="#contact">Contact</a>
+            <a href="/about">Our Story</a>
+            <a href="/products">Products</a>
+            <a href="/#journal">Journal</a>
+            <a href="/contact">Contact</a>
           </div>
         </div>
         <div>

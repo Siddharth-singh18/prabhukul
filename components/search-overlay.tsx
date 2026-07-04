@@ -2,7 +2,6 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { Search, X } from "lucide-react";
-import Image from "next/image";
 import { useMemo, useState } from "react";
 import { blogs, products } from "@/lib/data";
 import { formatINR } from "@/lib/utils";
@@ -80,7 +79,9 @@ export function SearchOverlay({ open, onClose }: { open: boolean; onClose: () =>
                 <div className="mt-4 grid gap-3">
                   {results.products.map((item) => (
                     <div key={item.id} className="flex items-center gap-4 rounded-xl border border-gold/25 p-3">
-                      <Image src={item.image} alt={item.name} width={72} height={72} className="h-16 w-16 rounded-lg object-cover" />
+                      <div className="grid h-16 w-16 shrink-0 place-items-center rounded-lg bg-forest text-center font-serif text-sm font-semibold text-gold">
+                        PK
+                      </div>
                       <div>
                         <p className="font-medium">{item.name}</p>
                         <p className="text-sm text-charcoal/60 dark:text-white/60">{item.category} · {formatINR(item.price)}</p>

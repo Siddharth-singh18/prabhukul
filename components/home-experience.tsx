@@ -1,13 +1,13 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { ChevronDown, Leaf, MapPin, Minus, Plus, ShoppingBag, Sparkles, Star } from "lucide-react";
-import Image from "next/image";
+import { CheckCircle2, ChevronDown, Leaf, MapPin, Minus, Plus, ShoppingBag, Sparkles, Star } from "lucide-react";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { benefits, blogs, categories, faqs, products, testimonials, whyUs } from "@/lib/data";
 import { formatINR } from "@/lib/utils";
 import { useCartStore } from "@/store/cart-store";
+import { AvatarBadge, BrandProductVisual, HeroProductScene, StoryVisual } from "./brand-visuals";
 import { Reveal, fadeUp, staggerContainer } from "./motion";
 
 export function HomeExperience() {
@@ -27,65 +27,69 @@ export function HomeExperience() {
 }
 
 function Hero() {
-  const words = ["Ancient", "Ayurveda,", "Modern", "Rituals."];
+  const words = ["Purity", "in", "Every", "Ritual"];
 
   return (
-    <section className="relative min-h-[96vh] overflow-hidden">
-      <Image
-        src="https://images.unsplash.com/photo-1600428877878-1a0fd85beda6?auto=format&fit=crop&w=2200&q=85"
-        alt="Ayurvedic botanicals and wellness ritual tray"
-        fill
-        priority
-        className="object-cover"
-      />
-      <div className="absolute inset-0 bg-gradient-to-r from-charcoal/82 via-charcoal/45 to-transparent" />
-      <div className="absolute inset-0 bg-mandala bg-[length:22px_22px] opacity-25" />
-      <div className="relative mx-auto flex min-h-[96vh] max-w-7xl flex-col justify-center px-6 pb-20 pt-28 text-white">
-        <motion.p
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="mb-5 text-xs font-semibold uppercase tracking-[0.4em] text-gold"
-        >
-          Prabhukul Ayurveda
-        </motion.p>
-        <motion.h1
-          variants={staggerContainer}
-          initial="hidden"
-          animate="show"
-          className="max-w-4xl font-serif text-6xl font-semibold leading-[0.92] md:text-8xl"
-        >
-          {words.map((word) => (
-            <motion.span key={word} variants={fadeUp} className="mr-4 inline-block">
-              {word}
-            </motion.span>
-          ))}
-        </motion.h1>
-        <motion.p
-          initial={{ opacity: 0, y: 18 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.45 }}
-          className="mt-7 max-w-2xl text-base leading-8 text-white/78 md:text-lg"
-        >
-          Premium skin, hair and wellness formulations rooted in Indian household wisdom, refined for a cleaner daily ritual.
-        </motion.p>
-        <motion.div
-          initial={{ opacity: 0, y: 18 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6 }}
-          className="mt-9 flex flex-wrap gap-4"
-        >
-          <a href="#products" className="rounded-full bg-gold px-7 py-3 font-semibold text-charcoal shadow-glow">
-            Shop Now
-          </a>
-          <a href="#story" className="rounded-full border border-white/35 px-7 py-3 font-semibold backdrop-blur hover:bg-white/10">
-            Explore Story
-          </a>
+    <section className="relative overflow-hidden bg-gradient-to-br from-white via-[#fffaf3] to-[#eef7ef] px-6 pb-14 pt-32 dark:from-charcoal dark:via-[#151515] dark:to-[#13231c]">
+      <div className="absolute inset-0 bg-mandala bg-[length:22px_22px] opacity-[0.045]" />
+      <div className="relative mx-auto grid min-h-[calc(100vh-8rem)] max-w-7xl items-center gap-12 lg:grid-cols-[0.9fr_1.1fr]">
+        <div>
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mb-5 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.35em] text-gold"
+          >
+            <Leaf className="h-4 w-4" /> Prabhukul Ayurveda
+          </motion.p>
+          <motion.h1
+            variants={staggerContainer}
+            initial="hidden"
+            animate="show"
+            className="max-w-3xl font-serif text-6xl font-semibold leading-[0.92] text-forest dark:text-white md:text-8xl"
+          >
+            {words.map((word, index) => (
+              <motion.span key={`${word}-${index}`} variants={fadeUp} className="mr-4 inline-block">
+                {word}
+              </motion.span>
+            ))}
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.45 }}
+            className="mt-7 max-w-xl text-base leading-8 text-charcoal/70 dark:text-white/70 md:text-lg"
+          >
+            Premium teas, oils and wellness rituals crafted for Indian homes with clean botanicals, honest sourcing and timeless taste.
+          </motion.p>
+          <motion.div
+            initial={{ opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6 }}
+            className="mt-9 flex flex-wrap gap-4"
+          >
+            <Link href="/products" className="rounded-full bg-forest px-7 py-3 font-semibold text-white shadow-glow hover:bg-maroon">
+              Explore Our Teas
+            </Link>
+            <Link href="/about" className="rounded-full border border-gold/50 bg-white/60 px-7 py-3 font-semibold text-forest backdrop-blur hover:bg-gold/15 dark:bg-white/10 dark:text-white">
+              Know Our Story
+            </Link>
+          </motion.div>
+          <div className="mt-10 grid gap-3 sm:grid-cols-3">
+            {["100% Natural", "Rich Aroma", "Trusted by Thousands"].map((item) => (
+              <div key={item} className="flex items-center gap-2 rounded-2xl bg-white/75 p-3 text-sm font-semibold text-forest shadow-sm dark:bg-white/10 dark:text-white">
+                <CheckCircle2 className="h-5 w-5 text-gold" /> {item}
+              </div>
+            ))}
+          </div>
+        </div>
+        <motion.div initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.3 }}>
+          <HeroProductScene />
         </motion.div>
       </div>
       <motion.div
         animate={{ y: [0, 10, 0] }}
         transition={{ repeat: Infinity, duration: 1.8 }}
-        className="absolute bottom-8 left-1/2 hidden -translate-x-1/2 text-white/80 md:block"
+        className="absolute bottom-6 left-1/2 hidden -translate-x-1/2 text-forest/60 dark:text-white/60 md:block"
       >
         <ChevronDown />
       </motion.div>
@@ -98,13 +102,8 @@ function Story() {
     <section id="story" className="relative px-6 py-24">
       <div className="absolute inset-0 bg-mandala bg-[length:18px_18px] opacity-[0.04]" />
       <div className="mx-auto grid max-w-7xl items-center gap-12 md:grid-cols-2">
-        <Reveal className="relative aspect-[4/5] overflow-hidden rounded-[2rem] shadow-glass">
-          <Image
-            src="https://images.unsplash.com/photo-1596178060810-72f53ce9a65c?auto=format&fit=crop&w=1200&q=85"
-            alt="Traditional Ayurvedic preparation with herbs"
-            fill
-            className="object-cover"
-          />
+        <Reveal>
+          <StoryVisual />
         </Reveal>
         <Reveal>
           <p className="text-xs font-semibold uppercase tracking-[0.35em] text-maroon dark:text-gold">Heritage, bottled gently</p>
@@ -175,8 +174,13 @@ function Products() {
                 whileHover={{ y: -8 }}
                 className="glass group overflow-hidden rounded-2xl"
               >
-                <div className="relative aspect-[4/3] overflow-hidden">
-                  <Image src={product.image} alt={product.name} fill className="object-cover transition duration-700 group-hover:scale-105" />
+                <div className="relative overflow-hidden">
+                  <BrandProductVisual
+                    title={product.name}
+                    subtitle={product.category}
+                    tone={product.tone as "green" | "maroon" | "gold"}
+                    className="rounded-none transition duration-700 group-hover:scale-[1.02]"
+                  />
                   <span className="absolute left-4 top-4 rounded-full bg-white/85 px-3 py-1 text-xs font-semibold text-maroon">
                     {product.badge}
                   </span>
@@ -245,7 +249,7 @@ function Testimonials() {
               </div>
               <p className="mt-4 min-h-20 leading-7 text-charcoal/75 dark:text-white/75">&ldquo;{item.text}&rdquo;</p>
               <div className="mt-5 flex items-center gap-3">
-                <Image src={item.image} alt={item.name} width={48} height={48} className="h-12 w-12 rounded-full object-cover" />
+                <AvatarBadge name={item.name} />
                 <div>
                   <p className="font-semibold">{item.name}</p>
                   <p className="text-sm text-charcoal/55 dark:text-white/55">{item.city}</p>
@@ -261,7 +265,7 @@ function Testimonials() {
 
 function WhyChooseUs() {
   return (
-    <section className="px-6 py-24">
+    <section id="why-prabhukul" className="px-6 py-24">
       <div className="mx-auto max-w-7xl">
         <Reveal className="text-center">
           <p className="text-xs font-semibold uppercase tracking-[0.35em] text-maroon dark:text-gold">Why Prabhukul</p>
@@ -300,9 +304,7 @@ function Journal() {
         <div className="mt-10 grid gap-6 md:grid-cols-3">
           {blogs.map((blog, index) => (
             <Reveal key={blog.slug} delay={index * 0.05} className="glass overflow-hidden rounded-2xl">
-              <div className="relative aspect-[4/3]">
-                <Image src={blog.image} alt={blog.title} fill className="object-cover" />
-              </div>
+              <BrandProductVisual title={blog.category} subtitle="Prabhukul Journal" tone={blog.tone as "green" | "maroon" | "gold"} className="rounded-none" />
               <div className="p-5">
                 <p className="text-sm text-maroon dark:text-gold">{blog.category} · {blog.readTime}</p>
                 <h3 className="mt-2 font-serif text-2xl font-semibold">{blog.title}</h3>

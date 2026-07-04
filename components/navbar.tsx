@@ -9,10 +9,11 @@ import { useCartStore } from "@/store/cart-store";
 import { SearchOverlay } from "./search-overlay";
 
 const links = [
-  ["Story", "#story"],
-  ["Products", "#products"],
-  ["Journal", "#journal"],
-  ["Contact", "#contact"]
+  ["Home", "/"],
+  ["About", "/about"],
+  ["Shop", "/products"],
+  ["Why Prabhukul", "/#why-prabhukul"],
+  ["Contact", "/contact"]
 ];
 
 export function Navbar() {
@@ -32,19 +33,16 @@ export function Navbar() {
   return (
     <>
       <header className="fixed left-0 right-0 top-0 z-40 px-4 pt-4">
-        <nav
-          className={`mx-auto flex max-w-7xl items-center justify-between rounded-full px-4 py-3 transition-all duration-300 ${
-            scrolled ? "glass" : "bg-white/10 text-white backdrop-blur-sm"
-          }`}
-        >
-          <Link href="/" className="font-serif text-2xl font-semibold tracking-wide">
+        <nav className={`glass mx-auto flex max-w-7xl items-center justify-between rounded-full px-4 py-3 text-forest transition-all duration-300 dark:text-white ${scrolled ? "shadow-glass" : ""}`}>
+          <Link href="/" className="flex items-center gap-2 font-serif text-2xl font-semibold tracking-wide">
+            <span className="grid h-8 w-8 place-items-center rounded-full bg-forest text-sm text-gold dark:bg-gold dark:text-charcoal">P</span>
             Prabhukul
           </Link>
           <div className="hidden items-center gap-7 text-sm font-medium md:flex">
             {links.map(([label, href]) => (
-              <a key={label} href={href} className="hover:text-gold">
+              <Link key={label} href={href} className="hover:text-maroon dark:hover:text-gold">
                 {label}
-              </a>
+              </Link>
             ))}
           </div>
           <div className="flex items-center gap-1">
@@ -89,9 +87,9 @@ export function Navbar() {
             </button>
             <div className="mt-8 grid gap-5 text-lg">
               {links.map(([label, href]) => (
-                <a key={label} href={href} onClick={() => setMenuOpen(false)}>
+                <Link key={label} href={href} onClick={() => setMenuOpen(false)}>
                   {label}
-                </a>
+                </Link>
               ))}
             </div>
           </motion.div>

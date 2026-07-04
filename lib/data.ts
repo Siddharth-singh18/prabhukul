@@ -20,7 +20,7 @@ export const products = [
     name: "Kumkumadi Glow Elixir",
     category: "Skin Rituals",
     price: 1890,
-    image: "https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?auto=format&fit=crop&w=900&q=85",
+    tone: "maroon",
     description: "Saffron, manjistha and rosehip oil for a luminous night ritual.",
     badge: "Bestseller"
   },
@@ -29,7 +29,7 @@ export const products = [
     name: "Bhringraj Hair Nectar",
     category: "Hair Care",
     price: 1420,
-    image: "https://images.unsplash.com/photo-1608248597279-f99d160bfcbc?auto=format&fit=crop&w=900&q=85",
+    tone: "green",
     description: "Cold-pressed sesame oil infused with bhringraj, amla and brahmi.",
     badge: "New"
   },
@@ -38,7 +38,7 @@ export const products = [
     name: "Triphala Daily Balance",
     category: "Wellness",
     price: 760,
-    image: "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&w=900&q=85",
+    tone: "gold",
     description: "A gentle digestive tonic crafted from haritaki, bibhitaki and amla.",
     badge: "Clean"
   },
@@ -47,7 +47,7 @@ export const products = [
     name: "Tulsi Saffron Calm Tea",
     category: "Herbal Teas",
     price: 540,
-    image: "https://images.unsplash.com/photo-1564890369478-c89ca6d9cde9?auto=format&fit=crop&w=900&q=85",
+    tone: "green",
     description: "Whole-leaf tulsi, saffron threads and rose petals for evening calm.",
     badge: "Ritual"
   },
@@ -56,7 +56,7 @@ export const products = [
     name: "Neem Clarity Mask",
     category: "Skin Rituals",
     price: 980,
-    image: "https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&w=900&q=85",
+    tone: "green",
     description: "Neem, vetiver and fuller earth for a refined weekly detox.",
     badge: "Vegan"
   },
@@ -65,7 +65,7 @@ export const products = [
     name: "Ashwagandha Rest Drops",
     category: "Wellness",
     price: 1290,
-    image: "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?auto=format&fit=crop&w=900&q=85",
+    tone: "maroon",
     description: "Adaptogenic drops for balance, sleep support and nervous system ease.",
     badge: "Doctor-loved"
   }
@@ -77,7 +77,7 @@ export const blogs = [
     title: "Dinacharya for Modern Indian Mornings",
     category: "Rituals",
     readTime: "5 min read",
-    image: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=900&q=85",
+    tone: "green",
     excerpt: "A realistic Ayurveda morning rhythm for busy homes, commutes and city life.",
     body: "Dinacharya is not a rigid checklist. It is a way to make the first hour of the day feel intentional. Begin with warm water, a few minutes of oil massage, gentle movement and a breakfast that suits your prakriti. The Prabhukul approach keeps the practice elegant, doable and consistent."
   },
@@ -86,7 +86,7 @@ export const blogs = [
     title: "Why Saffron Still Matters in Skincare",
     category: "Ingredients",
     readTime: "4 min read",
-    image: "https://images.unsplash.com/photo-1615485500704-8e990f9900f7?auto=format&fit=crop&w=900&q=85",
+    tone: "maroon",
     excerpt: "The science and sensorial heritage behind kesar-led radiance rituals.",
     body: "Saffron has endured because it combines ceremony with function. Used carefully, it supports a brighter-looking complexion and brings a unmistakable sense of luxury to a nightly ritual. We pair it with manjistha and rosehip to keep the formula balanced."
   },
@@ -95,17 +95,17 @@ export const blogs = [
     title: "The Case for Slow Hair Oiling",
     category: "Hair Care",
     readTime: "6 min read",
-    image: "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=900&q=85",
+    tone: "gold",
     excerpt: "How bhringraj, brahmi and massage create a restorative weekly practice.",
     body: "Hair oiling works best when it is slow enough to become a ritual. Warm a small amount of oil, massage from crown to ends and let the herbs rest before washing. Bhringraj and brahmi are prized in Ayurveda for scalp comfort and stronger-looking hair."
   }
 ];
 
 export const testimonials = [
-  { name: "Ananya Rao", city: "Bengaluru", text: "The glow elixir feels luxurious without being heavy. My skin actually looks rested in the morning.", image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=240&q=80" },
-  { name: "Kabir Mehta", city: "Mumbai", text: "The bhringraj oil turned my Sunday champi into something I genuinely look forward to.", image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=240&q=80" },
-  { name: "Ishita Sen", city: "Kolkata", text: "Premium packaging, honest ingredients and the tea is now part of my workday wind-down.", image: "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=240&q=80" },
-  { name: "Rohan Malhotra", city: "Delhi", text: "Finally an Ayurveda brand that feels modern but not disconnected from tradition.", image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=240&q=80" }
+  { name: "Ananya Rao", city: "Bengaluru", text: "The glow elixir feels luxurious without being heavy. My skin actually looks rested in the morning." },
+  { name: "Kabir Mehta", city: "Mumbai", text: "The bhringraj oil turned my Sunday champi into something I genuinely look forward to." },
+  { name: "Ishita Sen", city: "Kolkata", text: "Premium packaging, honest ingredients and the tea is now part of my workday wind-down." },
+  { name: "Rohan Malhotra", city: "Delhi", text: "Finally an Ayurveda brand that feels modern but not disconnected from tradition." }
 ];
 
 export const benefits = [

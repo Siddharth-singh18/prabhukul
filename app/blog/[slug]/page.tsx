@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { BrandProductVisual } from "@/components/brand-visuals";
 import { blogs } from "@/lib/data";
 
 type BlogPageProps = {
@@ -18,11 +18,7 @@ export function generateMetadata({ params }: BlogPageProps): Metadata {
   return {
     title: blog.title,
     description: blog.excerpt,
-    openGraph: {
-      title: blog.title,
-      description: blog.excerpt,
-      images: [blog.image]
-    }
+    openGraph: { title: blog.title, description: blog.excerpt }
   };
 }
 
@@ -41,9 +37,12 @@ export default function BlogPage({ params }: BlogPageProps) {
         </p>
         <h1 className="mt-4 font-serif text-5xl font-semibold leading-tight md:text-7xl">{blog.title}</h1>
         <p className="mt-5 text-xl leading-8 text-charcoal/65 dark:text-white/65">{blog.excerpt}</p>
-        <div className="relative mt-10 aspect-[16/9] overflow-hidden rounded-2xl shadow-glass">
-          <Image src={blog.image} alt={blog.title} fill priority className="object-cover" />
-        </div>
+        <BrandProductVisual
+          title={blog.category}
+          subtitle="Prabhukul Journal"
+          tone={blog.tone as "green" | "maroon" | "gold"}
+          className="mt-10 min-h-[360px] shadow-glass"
+        />
         <div className="prose prose-lg mt-10 max-w-none dark:prose-invert">
           <p>{blog.body}</p>
           <p>
