@@ -43,7 +43,7 @@ export const useCartStore = create<CartState>((set) => ({
         .filter((item) => item.quantity > 0);
       return { items, totalItems: items.reduce((sum, item) => sum + item.quantity, 0) };
     }),
-  clearCart: () => ({ items: [], totalItems: 0 }),
+  clearCart: () => set({ items: [], totalItems: 0 }),
   toggleWishlist: (id) =>
     set((state) => ({
       wishlist: state.wishlist.includes(id)

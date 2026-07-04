@@ -53,7 +53,7 @@ export function Navbar() {
   const subtotal = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
+    const onScroll = () => setScrolled(window.scrollY > 2);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -69,11 +69,7 @@ export function Navbar() {
   return (
     <>
       <header className="sticky left-0 right-0 top-0 z-40 border-b border-[#e9e2d7] bg-white/95 text-[#1c241d] shadow-[0_8px_28px_rgba(46,74,61,.06)] backdrop-blur-xl dark:border-white/10 dark:bg-charcoal/95 dark:text-white">
-        <div
-          className={`hidden overflow-hidden border-b border-[#ece6dc] transition-all duration-300 ease-out dark:border-white/10 lg:block ${
-            scrolled ? "max-h-0 opacity-0" : "max-h-12 opacity-100"
-          }`}
-        >
+        <div className={`${scrolled ? "hidden" : "hidden border-b border-[#ece6dc] dark:border-white/10 lg:block"}`}>
           <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-3 text-sm">
             <div className="flex items-center gap-2">
               <Leaf className="h-5 w-5 text-forest dark:text-gold" />
@@ -160,7 +156,7 @@ export function Navbar() {
           </div>
         </nav>
 
-        <div className={`hidden overflow-hidden px-5 transition-all duration-300 ease-out lg:block ${scrolled ? "max-h-0 pb-0 opacity-0" : "max-h-24 pb-5 opacity-100"}`}>
+        <div className={`${scrolled ? "hidden" : "hidden px-5 pb-5 lg:block"}`}>
           <div className="mx-auto grid max-w-7xl grid-cols-[240px_1fr_220px] gap-3">
             <div className="relative">
             <button onClick={() => setCategoryOpen((value) => !value)} className="flex w-full items-center justify-between rounded-md bg-forest px-6 py-4 font-semibold text-white shadow-sm">
