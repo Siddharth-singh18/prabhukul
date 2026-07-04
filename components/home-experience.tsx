@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { CheckCircle2, ChevronDown, Leaf, MapPin, Minus, Plus, ShoppingBag, Sparkles, Star } from "lucide-react";
+import { CheckCircle2, ChevronDown, Heart, Leaf, MapPin, Minus, Plus, ShoppingBag, Sparkles, Star, XCircle } from "lucide-react";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { benefits, blogs, categories, faqs, products, testimonials, whyUs } from "@/lib/data";
@@ -147,7 +147,7 @@ function Story() {
 
 function Products() {
   const [active, setActive] = useState("All");
-  const addItem = useCartStore((state) => state.addItem);
+  const { addItem, toggleWishlist, wishlist } = useCartStore((state) => state);
   const filtered = useMemo(
     () => (active === "All" ? products : products.filter((product) => product.category === active)),
     [active]
@@ -183,44 +183,60 @@ function Products() {
           className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3"
         >
           <AnimatePresence mode="popLayout">
-            {filtered.map((product) => (
-              <motion.article
-                layout
-                key={product.id}
-                variants={fadeUp}
-                whileHover={{ y: -8 }}
-                className="glass group overflow-hidden rounded-2xl"
-              >
-                <div className="relative overflow-hidden">
-                  <BrandProductVisual
-                    title={product.name}
-                    subtitle={product.category}
-                    tone={product.tone as "green" | "maroon" | "gold"}
-                    className="rounded-none transition duration-700 group-hover:scale-[1.02]"
-                  />
-                  <span className="absolute left-4 top-4 rounded-full bg-white/85 px-3 py-1 text-xs font-semibold text-maroon">
-                    {product.badge}
-                  </span>
-                </div>
-                <div className="p-5">
-                  <div className="flex items-start justify-between gap-4">
-                    <div>
-                      <p className="text-sm text-maroon dark:text-gold">{product.category}</p>
-                      <h3 className="mt-1 font-serif text-2xl font-semibold">{product.name}</h3>
-                    </div>
-                    <p className="font-semibold">{formatINR(product.price)}</p>
+            {filtered.map((product) => {
+              const liked = wishlist.includes(product.id);
+              const inStock = product.stock > 0;
+              return (
+                <motion.article
+                  layout
+                  key={product.id}
+                  variants={fadeUp}
+                  whileHover={{ y: -8 }}
+                  className="glass group overflow-hidden rounded-2xl"
+                >
+                  <div className="relative overflow-hidden">
+                    <BrandProductVisual
+                      title={product.name}
+                      subtitle={product.category}
+                      tone={product.tone as "green" | "maroon" | "gold"}
+                      className="rounded-none transition duration-700 group-hover:scale-[1.02]"
+                    />
+                    <span className="absolute left-4 top-4 rounded-full bg-white/85 px-3 py-1 text-xs font-semibold text-maroon">
+                      {product.badge}
+                    </span>
+                    <button
+                      aria-label={liked ? "Remove from liked" : "Add to liked"}
+                      onClick={() => toggleWishlist(product.id)}
+                      className={`absolute right-4 top-4 rounded-full p-2 shadow-sm ${liked ? "bg-maroon text-white" : "bg-white/85 text-forest"}`}
+                    >
+                      <Heart className={`h-4 w-4 ${liked ? "fill-current" : ""}`} />
+                    </button>
                   </div>
-                  <p className="mt-3 min-h-12 text-sm leading-6 text-charcoal/65 dark:text-white/65">{product.description}</p>
-                  <motion.button
-                    whileTap={{ scale: 0.96 }}
-                    onClick={() => addItem(product)}
-                    className="mt-5 flex w-full items-center justify-center gap-2 rounded-full bg-forest px-5 py-3 font-semibold text-white hover:bg-maroon"
-                  >
-                    <ShoppingBag className="h-4 w-4" /> Add to Cart
-                  </motion.button>
-                </div>
-              </motion.article>
-            ))}
+                  <div className="p-5">
+                    <div className="flex items-start justify-between gap-4">
+                      <div>
+                        <p className="text-sm text-maroon dark:text-gold">{product.category}</p>
+                        <h3 className="mt-1 font-serif text-2xl font-semibold">{product.name}</h3>
+                      </div>
+                      <p className="font-semibold">{formatINR(product.price)}</p>
+                    </div>
+                    <p className="mt-3 min-h-12 text-sm leading-6 text-charcoal/65 dark:text-white/65">{product.description}</p>
+                    <p className={`mt-4 flex items-center gap-2 text-sm font-medium ${inStock ? "text-forest dark:text-gold" : "text-maroon"}`}>
+                      {inStock ? <CheckCircle2 className="h-4 w-4" /> : <XCircle className="h-4 w-4" />}
+                      {inStock ? `${product.stock} in stock` : "Out of stock"}
+                    </p>
+                    <motion.button
+                      whileTap={{ scale: inStock ? 0.96 : 1 }}
+                      disabled={!inStock}
+                      onClick={() => addItem(product)}
+                      className="mt-5 flex w-full items-center justify-center gap-2 rounded-full bg-forest px-5 py-3 font-semibold text-white hover:bg-maroon disabled:cursor-not-allowed disabled:bg-charcoal/25"
+                    >
+                      <ShoppingBag className="h-4 w-4" /> {inStock ? "Add to Cart" : "Sold out"}
+                    </motion.button>
+                  </div>
+                </motion.article>
+              );
+            })}
           </AnimatePresence>
         </motion.div>
       </div>

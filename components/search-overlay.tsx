@@ -1,7 +1,9 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { Search, X } from "lucide-react";
+import { CheckCircle2, Search, X, XCircle } from "lucide-react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 import { blogs, products } from "@/lib/data";
 import { formatINR } from "@/lib/utils";
@@ -10,6 +12,7 @@ const trending = ["Kumkumadi", "Bhringraj", "Triphala", "Tulsi tea"];
 
 export function SearchOverlay({ open, onClose }: { open: boolean; onClose: () => void }) {
   const [query, setQuery] = useState("");
+  const router = useRouter();
   const results = useMemo(() => {
     const q = query.toLowerCase().trim();
     if (!q) return { products: [], blogs: [] };
@@ -18,6 +21,13 @@ export function SearchOverlay({ open, onClose }: { open: boolean; onClose: () =>
       blogs: blogs.filter((item) => `${item.title} ${item.category}`.toLowerCase().includes(q))
     };
   }, [query]);
+
+  const goToShopSearch = (value = query) => {
+    const params = new URLSearchParams();
+    if (value.trim()) params.set("q", value.trim());
+    router.push(`/products${params.toString() ? `?${params.toString()}` : ""}`);
+    onClose();
+  };
 
   return (
     <AnimatePresence>
@@ -58,7 +68,7 @@ export function SearchOverlay({ open, onClose }: { open: boolean; onClose: () =>
                     {trending.map((item) => (
                       <button
                         key={item}
-                        onClick={() => setQuery(item)}
+                        onClick={() => goToShopSearch(item)}
                         className="rounded-full border border-gold/40 px-4 py-2 text-sm hover:bg-gold/15"
                       >
                         {item}
@@ -78,22 +88,42 @@ export function SearchOverlay({ open, onClose }: { open: boolean; onClose: () =>
                 </p>
                 <div className="mt-4 grid gap-3">
                   {results.products.map((item) => (
-                    <div key={item.id} className="flex items-center gap-4 rounded-xl border border-gold/25 p-3">
+                    <button
+                      key={item.id}
+                      onClick={() => {
+                        router.push(`/products?category=${encodeURIComponent(item.category)}&q=${encodeURIComponent(item.name)}`);
+                        onClose();
+                      }}
+                      className="flex items-center gap-4 rounded-xl border border-gold/25 p-3 text-left hover:bg-gold/10"
+                    >
                       <div className="grid h-16 w-16 shrink-0 place-items-center rounded-lg bg-forest text-center font-serif text-sm font-semibold text-gold">
                         PK
                       </div>
-                      <div>
+                      <div className="min-w-0 flex-1">
                         <p className="font-medium">{item.name}</p>
                         <p className="text-sm text-charcoal/60 dark:text-white/60">{item.category} · {formatINR(item.price)}</p>
+                        <p className={`mt-1 flex items-center gap-1 text-xs font-semibold ${item.stock > 0 ? "text-forest dark:text-gold" : "text-maroon"}`}>
+                          {item.stock > 0 ? <CheckCircle2 className="h-3 w-3" /> : <XCircle className="h-3 w-3" />}
+                          {item.stock > 0 ? `${item.stock} in stock` : "Out of stock"}
+                        </p>
                       </div>
-                    </div>
+                    </button>
                   ))}
                   {results.blogs.map((item) => (
-                    <a key={item.slug} href={`/blog/${item.slug}`} className="rounded-xl border border-gold/25 p-4 hover:bg-gold/10">
+                    <Link key={item.slug} href={`/blog/${item.slug}`} onClick={onClose} className="rounded-xl border border-gold/25 p-4 hover:bg-gold/10">
                       <p className="font-medium">{item.title}</p>
                       <p className="text-sm text-charcoal/60 dark:text-white/60">{item.readTime} · {item.category}</p>
-                    </a>
+                    </Link>
                   ))}
+                  {!results.products.length && !results.blogs.length ? (
+                    <div className="rounded-xl border border-dashed border-gold/35 p-6 text-center">
+                      <p className="font-semibold">Abhi ye product available nahi hai</p>
+                      <p className="mt-1 text-sm text-charcoal/60 dark:text-white/60">Shop page par dusri category try karo ya later check karo.</p>
+                      <button onClick={() => goToShopSearch()} className="mt-4 rounded-full bg-forest px-5 py-2 text-sm font-semibold text-white">
+                        Search in shop
+                      </button>
+                    </div>
+                  ) : null}
                 </div>
               </div>
             )}

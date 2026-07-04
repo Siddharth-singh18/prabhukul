@@ -3,6 +3,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import {
   ChevronDown,
+  Minus,
   Facebook,
   Heart,
   Instagram,
@@ -11,6 +12,7 @@ import {
   Moon,
   Package,
   Phone,
+  Plus,
   Search,
   ShoppingBag,
   Sun,
@@ -20,8 +22,11 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
+import { categories } from "@/lib/data";
+import { formatINR } from "@/lib/utils";
 import { useCartStore } from "@/store/cart-store";
 import { SearchOverlay } from "./search-overlay";
 
@@ -36,17 +41,30 @@ const links = [
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [cartOpen, setCartOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [categoryOpen, setCategoryOpen] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [searchTerm, setSearchTerm] = useState("");
   const { theme, setTheme } = useTheme();
   const pathname = usePathname();
-  const totalItems = useCartStore((state) => state.totalItems);
+  const router = useRouter();
+  const { items, wishlist, totalItems, addItem, decreaseItem, removeItem, clearCart } = useCartStore((state) => state);
+  const subtotal = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 72);
+    const onScroll = () => setScrolled(window.scrollY > 24);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  const submitSearch = () => {
+    const params = new URLSearchParams();
+    if (selectedCategory !== "All") params.set("category", selectedCategory);
+    if (searchTerm.trim()) params.set("q", searchTerm.trim());
+    router.push(`/products${params.toString() ? `?${params.toString()}` : ""}`);
+  };
 
   return (
     <>
@@ -66,9 +84,9 @@ export function Navbar() {
               <span className="h-5 w-px bg-[#cfc7ba]" />
               <Link href="/products" className="hover:text-forest dark:hover:text-gold">Bulk Orders</Link>
               <div className="flex items-center gap-4 text-charcoal/80 dark:text-white/80">
-                <Facebook className="h-5 w-5" />
-                <Instagram className="h-5 w-5" />
-                <Youtube className="h-5 w-5" />
+                <a href="https://facebook.com/prabhukul" target="_blank" rel="noreferrer" aria-label="Facebook"><Facebook className="h-5 w-5" /></a>
+                <a href="https://instagram.com/prabhukul" target="_blank" rel="noreferrer" aria-label="Instagram"><Instagram className="h-5 w-5" /></a>
+                <a href="https://youtube.com/@prabhukul" target="_blank" rel="noreferrer" aria-label="YouTube"><Youtube className="h-5 w-5" /></a>
               </div>
             </div>
           </div>
@@ -110,11 +128,11 @@ export function Navbar() {
             <Link href="/dashboard/user" aria-label="Account" className="hidden rounded-full p-2 hover:bg-forest/10 lg:block">
               <UserRound className="h-6 w-6" />
             </Link>
-            <button aria-label="Wishlist" className="relative hidden rounded-full p-2 hover:bg-forest/10 lg:block">
+            <Link href="/products?liked=true" aria-label="Wishlist" className="relative hidden rounded-full p-2 hover:bg-forest/10 lg:block">
               <Heart className="h-6 w-6" />
-              <span className="absolute -right-0.5 top-1 grid h-5 w-5 place-items-center rounded-full bg-forest text-[10px] text-white">0</span>
-            </button>
-            <button aria-label="Cart" className="relative rounded-full p-2 hover:bg-forest/10">
+              <span className="absolute -right-0.5 top-1 grid h-5 w-5 place-items-center rounded-full bg-forest text-[10px] text-white">{wishlist.length}</span>
+            </Link>
+            <button aria-label="Cart" onClick={() => setCartOpen(true)} className="relative rounded-full p-2 hover:bg-forest/10">
               <ShoppingBag className="h-6 w-6" />
               <span className="absolute -right-0.5 top-1 grid h-5 w-5 place-items-center rounded-full bg-forest text-[10px] text-white">
                 {totalItems}
@@ -144,32 +162,139 @@ export function Navbar() {
 
         <div className={`hidden overflow-hidden px-5 transition-all duration-300 ease-out lg:block ${scrolled ? "max-h-0 pb-0 opacity-0" : "max-h-24 pb-5 opacity-100"}`}>
           <div className="mx-auto grid max-w-7xl grid-cols-[240px_1fr_220px] gap-3">
-            <button className="flex items-center justify-between rounded-md bg-forest px-6 py-4 font-semibold text-white shadow-sm">
+            <div className="relative">
+            <button onClick={() => setCategoryOpen((value) => !value)} className="flex w-full items-center justify-between rounded-md bg-forest px-6 py-4 font-semibold text-white shadow-sm">
               <span className="flex items-center gap-3"><Menu className="h-5 w-5" /> All Categories</span>
               <ChevronDown className="h-4 w-4" />
             </button>
+              {categoryOpen ? (
+                <div className="absolute left-0 top-full z-50 mt-2 w-full overflow-hidden rounded-xl border border-[#e6dfd3] bg-white py-2 shadow-2xl dark:border-white/10 dark:bg-charcoal">
+                  {categories.map((category) => (
+                    <button
+                      key={category}
+                      onClick={() => {
+                        setSelectedCategory(category);
+                        setCategoryOpen(false);
+                        router.push(`/products${category === "All" ? "" : `?category=${encodeURIComponent(category)}`}`);
+                      }}
+                      className="block w-full px-4 py-2 text-left text-sm hover:bg-forest/10"
+                    >
+                      {category}
+                    </button>
+                  ))}
+                </div>
+              ) : null}
+            </div>
             <div className="grid grid-cols-[260px_1fr_110px] rounded-md border border-[#e6dfd3] bg-white shadow-sm dark:border-white/10 dark:bg-white/5">
-              <button className="flex items-center justify-between border-r border-[#e6dfd3] px-5 text-left dark:border-white/10">
-                Select a category <ChevronDown className="h-4 w-4" />
-              </button>
-              <button onClick={() => setSearchOpen(true)} className="flex items-center gap-3 px-5 text-left text-charcoal/50 dark:text-white/50">
-                <Search className="h-4 w-4" /> Search for products...
-              </button>
-              <button onClick={() => setSearchOpen(true)} className="m-1 rounded-md bg-forest font-semibold text-white">
+              <select
+                value={selectedCategory}
+                onChange={(event) => setSelectedCategory(event.target.value)}
+                className="border-r border-[#e6dfd3] bg-transparent px-5 outline-none dark:border-white/10"
+                aria-label="Select category"
+              >
+                {categories.map((category) => (
+                  <option key={category} value={category}>{category}</option>
+                ))}
+              </select>
+              <div className="flex items-center gap-3 px-5 text-charcoal/50 dark:text-white/50">
+                <Search className="h-4 w-4" />
+                <input
+                  value={searchTerm}
+                  onChange={(event) => setSearchTerm(event.target.value)}
+                  onKeyDown={(event) => {
+                    if (event.key === "Enter") submitSearch();
+                  }}
+                  placeholder="Search for products..."
+                  className="w-full bg-transparent outline-none placeholder:text-charcoal/50 dark:placeholder:text-white/50"
+                />
+              </div>
+              <button onClick={submitSearch} className="m-1 rounded-md bg-forest font-semibold text-white">
                 Search
               </button>
             </div>
             <div className="flex items-center justify-around rounded-md bg-white px-4 shadow-sm dark:bg-white/5">
               <Package className="h-6 w-6" />
               <span className="h-8 w-px bg-[#e6dfd3] dark:bg-white/10" />
-              <Heart className="h-6 w-6" />
+              <Link href="/products?liked=true" aria-label="Liked items"><Heart className="h-6 w-6" /></Link>
               <span className="h-8 w-px bg-[#e6dfd3] dark:bg-white/10" />
-              <ShoppingBag className="h-6 w-6" />
+              <button onClick={() => setCartOpen(true)} aria-label="Open cart"><ShoppingBag className="h-6 w-6" /></button>
             </div>
           </div>
         </div>
       </header>
       <SearchOverlay open={searchOpen} onClose={() => setSearchOpen(false)} />
+      <AnimatePresence>
+        {cartOpen ? (
+          <motion.div className="fixed inset-0 z-50 bg-charcoal/35 backdrop-blur-sm" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+            <motion.aside
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ type: "spring", damping: 28, stiffness: 260 }}
+              className="ml-auto flex h-full w-full max-w-md flex-col bg-ivory p-6 shadow-2xl dark:bg-charcoal"
+            >
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-[0.28em] text-gold">Prabhukul cart</p>
+                  <h2 className="mt-1 font-serif text-3xl font-semibold">Your bag</h2>
+                </div>
+                <button aria-label="Close cart" onClick={() => setCartOpen(false)} className="rounded-full p-2 hover:bg-forest/10">
+                  <X />
+                </button>
+              </div>
+              <div className="mt-6 flex-1 overflow-y-auto">
+                {items.length ? (
+                  <div className="grid gap-4">
+                    {items.map((item) => (
+                      <div key={item.id} className="rounded-2xl border border-gold/25 bg-white/70 p-4 dark:bg-white/5">
+                        <div className="flex justify-between gap-4">
+                          <div>
+                            <p className="font-semibold">{item.name}</p>
+                            <p className="text-sm text-charcoal/60 dark:text-white/60">{item.category} · {formatINR(item.price)}</p>
+                          </div>
+                          <button aria-label="Remove item" onClick={() => removeItem(item.id)} className="h-fit rounded-full p-1 hover:bg-maroon/10">
+                            <X className="h-4 w-4" />
+                          </button>
+                        </div>
+                        <div className="mt-4 flex items-center justify-between">
+                          <div className="flex items-center rounded-full border border-gold/30">
+                            <button aria-label="Decrease quantity" onClick={() => decreaseItem(item.id)} className="p-2"><Minus className="h-4 w-4" /></button>
+                            <span className="min-w-8 text-center text-sm font-semibold">{item.quantity}</span>
+                            <button aria-label="Increase quantity" onClick={() => addItem(item)} className="p-2"><Plus className="h-4 w-4" /></button>
+                          </div>
+                          <p className="font-semibold">{formatINR(item.price * item.quantity)}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="grid h-full place-items-center rounded-2xl border border-dashed border-gold/35 p-8 text-center">
+                    <div>
+                      <ShoppingBag className="mx-auto h-10 w-10 text-gold" />
+                      <p className="mt-4 font-semibold">Cart empty hai</p>
+                      <p className="mt-1 text-sm text-charcoal/60 dark:text-white/60">Products add karoge to yahi dikh jayenge.</p>
+                    </div>
+                  </div>
+                )}
+              </div>
+              <div className="mt-6 border-t border-gold/25 pt-5">
+                <div className="flex items-center justify-between text-lg font-semibold">
+                  <span>Subtotal</span>
+                  <span>{formatINR(subtotal)}</span>
+                </div>
+                <div className="mt-4 grid grid-cols-2 gap-3">
+                  <button onClick={clearCart} disabled={!items.length} className="rounded-full border border-gold/40 px-4 py-3 font-semibold disabled:opacity-40">
+                    Clear
+                  </button>
+                  <Link href="/dashboard/user" onClick={() => setCartOpen(false)} className="rounded-full bg-forest px-4 py-3 text-center font-semibold text-white">
+                    Checkout
+                  </Link>
+                </div>
+              </div>
+            </motion.aside>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
       <AnimatePresence>
         {menuOpen ? (
           <motion.div

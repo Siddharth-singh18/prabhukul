@@ -22,7 +22,8 @@ export const products = [
     price: 1890,
     tone: "maroon",
     description: "Saffron, manjistha and rosehip oil for a luminous night ritual.",
-    badge: "Bestseller"
+    badge: "Bestseller",
+    stock: 12
   },
   {
     id: "bhringraj-hair-nectar",
@@ -31,7 +32,8 @@ export const products = [
     price: 1420,
     tone: "green",
     description: "Cold-pressed sesame oil infused with bhringraj, amla and brahmi.",
-    badge: "New"
+    badge: "New",
+    stock: 8
   },
   {
     id: "triphala-daily-balance",
@@ -40,7 +42,8 @@ export const products = [
     price: 760,
     tone: "gold",
     description: "A gentle digestive tonic crafted from haritaki, bibhitaki and amla.",
-    badge: "Clean"
+    badge: "Clean",
+    stock: 0
   },
   {
     id: "tulsi-saffron-calm-tea",
@@ -49,7 +52,8 @@ export const products = [
     price: 540,
     tone: "green",
     description: "Whole-leaf tulsi, saffron threads and rose petals for evening calm.",
-    badge: "Ritual"
+    badge: "Ritual",
+    stock: 18
   },
   {
     id: "neem-clarity-mask",
@@ -58,7 +62,8 @@ export const products = [
     price: 980,
     tone: "green",
     description: "Neem, vetiver and fuller earth for a refined weekly detox.",
-    badge: "Vegan"
+    badge: "Vegan",
+    stock: 5
   },
   {
     id: "ashwagandha-rest-drops",
@@ -67,7 +72,8 @@ export const products = [
     price: 1290,
     tone: "maroon",
     description: "Adaptogenic drops for balance, sleep support and nervous system ease.",
-    badge: "Doctor-loved"
+    badge: "Doctor-loved",
+    stock: 0
   }
 ];
 

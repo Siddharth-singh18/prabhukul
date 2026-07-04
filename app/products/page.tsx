@@ -1,14 +1,22 @@
-import { CheckCircle2, ShoppingBag } from "lucide-react";
-import { BrandProductVisual } from "@/components/brand-visuals";
-import { categories, products } from "@/lib/data";
-import { formatINR } from "@/lib/utils";
+import { ProductCatalog } from "@/components/product-catalog";
+import { categories } from "@/lib/data";
 
 export const metadata = {
   title: "Shop Prabhukul",
   description: "Explore Prabhukul teas, oils, skincare and wellness products."
 };
 
-export default function ProductsPage() {
+export default function ProductsPage({
+  searchParams
+}: {
+  searchParams?: { category?: string; q?: string; liked?: string };
+}) {
+  const selectedCategory = categories.includes(searchParams?.category ?? "")
+    ? searchParams?.category ?? "All"
+    : "All";
+  const query = searchParams?.q ?? "";
+  const likedOnly = searchParams?.liked === "true";
+
   return (
     <main className="bg-ivory text-charcoal dark:bg-charcoal dark:text-ivory">
       <section className="relative overflow-hidden bg-gradient-to-br from-white via-[#fffaf3] to-[#eef7ef] px-6 pb-16 pt-32 dark:from-charcoal dark:via-[#151515] dark:to-[#13231c]">
@@ -34,43 +42,7 @@ export default function ProductsPage() {
         </div>
       </section>
 
-      <section className="px-6 py-20">
-        <div className="mx-auto grid max-w-7xl gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {products.map((product) => (
-            <article key={product.id} className="glass overflow-hidden rounded-2xl">
-              <div className="relative">
-                <BrandProductVisual
-                  title={product.name}
-                  subtitle={product.category}
-                  tone={product.tone as "green" | "maroon" | "gold"}
-                  className="rounded-none"
-                />
-                <span className="absolute left-4 top-4 rounded-full bg-white/85 px-3 py-1 text-xs font-semibold text-maroon">
-                  {product.badge}
-                </span>
-              </div>
-              <div className="p-6">
-                <div className="flex items-start justify-between gap-4">
-                  <div>
-                    <p className="text-sm text-maroon dark:text-gold">{product.category}</p>
-                    <h2 className="mt-1 font-serif text-2xl font-semibold">{product.name}</h2>
-                  </div>
-                  <p className="font-semibold">{formatINR(product.price)}</p>
-                </div>
-                <p className="mt-3 text-sm leading-6 text-charcoal/65 dark:text-white/65">{product.description}</p>
-                <div className="mt-5 flex items-center justify-between gap-3">
-                  <span className="flex items-center gap-2 text-sm font-medium text-forest dark:text-gold">
-                    <CheckCircle2 className="h-4 w-4" /> In stock
-                  </span>
-                  <button className="flex items-center gap-2 rounded-full bg-forest px-5 py-3 text-sm font-semibold text-white hover:bg-maroon">
-                    <ShoppingBag className="h-4 w-4" /> Add
-                  </button>
-                </div>
-              </div>
-            </article>
-          ))}
-        </div>
-      </section>
+      <ProductCatalog initialCategory={selectedCategory} query={query} likedOnly={likedOnly} />
     </main>
   );
 }
