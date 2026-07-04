@@ -48,31 +48,56 @@ export function BrandProductVisual({ title, subtitle = "Ayurveda Ritual", tone =
 
 export function HeroProductScene() {
   return (
-    <div className="relative min-h-[420px] overflow-hidden rounded-[2rem] bg-gradient-to-br from-[#fffaf1] via-white to-[#ecf6ee] p-6 shadow-[0_30px_90px_rgba(46,74,61,.16)]">
-      <div className="absolute -right-16 top-6 h-56 w-56 rounded-full bg-green-200/45 blur-3xl" />
-      <div className="absolute bottom-0 left-0 right-0 h-28 bg-gradient-to-t from-gold/20 to-transparent" />
-      <div className="absolute right-4 top-10 rotate-12 text-forest/20">
-        <Leaf className="h-28 w-28" />
+    <div className="relative min-h-[560px] overflow-hidden">
+      <div className="absolute bottom-8 right-10 h-[390px] w-[520px] rounded-t-full border-[14px] border-[#d9bd8a]/45 bg-white/55 shadow-[inset_0_0_60px_rgba(201,161,92,.16)]" />
+      <div className="absolute bottom-2 right-20 h-36 w-[520px] rounded-[50%] bg-white shadow-[0_22px_70px_rgba(46,74,61,.18)]" />
+      <div className="absolute -left-2 bottom-24 text-forest/40">
+        <Leaf className="h-28 w-28 rotate-12 fill-current" />
       </div>
-      <div className="absolute bottom-8 right-8 h-44 w-44 rounded-full bg-white/80 shadow-2xl" />
-      <div className="absolute bottom-20 right-20 h-24 w-24 rounded-full bg-gradient-to-br from-[#85401d] to-[#e0a04f]" />
-      <div className="absolute bottom-24 right-5 h-8 w-14 rounded-full border-[10px] border-white" />
-      <div className="absolute bottom-14 left-12 h-56 w-36 rotate-[-6deg] rounded-2xl bg-gradient-to-br from-forest via-[#315846] to-[#10261e] p-4 text-white shadow-2xl">
-        <div className="grid h-full rounded-xl border border-gold/50 p-4 text-center">
-          <span className="text-[11px] uppercase tracking-[0.25em] text-gold">Prabhukul</span>
-          <strong className="self-center font-serif text-3xl leading-none">Diamond Tea</strong>
-          <span className="self-end text-[11px] text-white/70">Tulsi · Saffron · Rose</span>
+      <div className="absolute left-20 bottom-40 text-forest/50">
+        <Leaf className="h-20 w-20 -rotate-12 fill-current" />
+      </div>
+      <div className="absolute right-0 top-24 text-forest/18">
+        <Leaf className="h-32 w-32 -rotate-45 fill-current" />
+      </div>
+
+      <div className="absolute bottom-32 left-32 h-72 w-48 rotate-[-1deg] rounded-[10px] bg-gradient-to-br from-[#082719] via-forest to-[#0c3727] p-4 text-white shadow-[0_28px_60px_rgba(9,42,27,.32)]">
+        <div className="absolute inset-y-0 right-0 w-10 bg-black/20" />
+        <div className="absolute right-3 top-12 h-24 w-8 rounded-sm bg-white/85 text-[6px] text-charcoal" />
+        <div className="relative grid h-full rounded-md border border-gold/55 p-4 text-center">
+          <span className="mx-auto grid h-9 w-9 rotate-45 place-items-center border-2 border-gold">
+            <span className="-rotate-45 text-xs text-gold">श्री</span>
+          </span>
+          <strong className="self-center font-serif text-3xl leading-none text-gold">Prabhukul</strong>
+          <span className="rounded bg-gold px-2 py-1 text-[9px] font-bold text-forest">Strong and Reliable</span>
+          <span className="mt-3 text-lg font-bold uppercase tracking-[0.22em]">Diamond Tea</span>
+          <span className="text-[10px] uppercase tracking-[0.18em] text-gold">Purity with Taste</span>
+          <span className="self-end text-right text-xs font-semibold">250 g</span>
         </div>
       </div>
-      <div className="absolute bottom-16 left-40 h-72 w-48 rotate-3 rounded-2xl bg-gradient-to-br from-forest via-[#38624f] to-[#10261e] p-5 text-white shadow-2xl">
-        <div className="grid h-full rounded-xl border border-gold/50 p-5 text-center">
-          <span className="text-xs uppercase tracking-[0.28em] text-gold">Prabhukul</span>
-          <strong className="self-center font-serif text-4xl leading-none">Diamond Tea</strong>
-          <span className="self-end text-xs text-white/70">Premium Ayurvedic Blend</span>
+
+      <div className="absolute bottom-40 left-72 h-96 w-64 rotate-2 rounded-[12px] bg-gradient-to-br from-[#082719] via-[#0f4a33] to-[#051b12] p-5 text-white shadow-[0_35px_90px_rgba(9,42,27,.36)]">
+        <div className="absolute inset-y-0 right-0 w-14 bg-black/20" />
+        <div className="absolute right-4 top-28 h-36 w-10 rounded-sm bg-white/85 text-[7px] text-charcoal" />
+        <div className="relative grid h-full rounded-lg border border-gold/60 p-5 text-center">
+          <span className="mx-auto grid h-11 w-11 rotate-45 place-items-center border-2 border-gold">
+            <span className="-rotate-45 text-sm text-gold">श्री</span>
+          </span>
+          <strong className="self-center font-serif text-5xl leading-none text-gold drop-shadow">Prabhukul</strong>
+          <span className="mx-auto rounded bg-gold px-3 py-1 text-[10px] font-bold text-forest">Strong and Reliable</span>
+          <span className="mt-3 text-2xl font-bold uppercase tracking-[0.24em]">Diamond Tea</span>
+          <span className="text-[11px] uppercase tracking-[0.24em] text-gold">Purity with Taste</span>
+          <span className="self-end text-right text-sm font-semibold">250 g</span>
         </div>
       </div>
-      <div className="absolute left-8 top-8 rounded-full bg-white/80 px-4 py-2 text-sm font-semibold text-forest shadow-sm">
-        Purity packed fresh
+
+      <div className="absolute bottom-24 right-16 h-36 w-36 rounded-full bg-white shadow-[0_22px_60px_rgba(46,74,61,.20)] ring-[12px] ring-white/70">
+        <div className="absolute inset-8 rounded-full bg-gradient-to-br from-[#b96e28] via-[#e6a94c] to-[#8a4218]" />
+        <div className="absolute -right-8 top-14 h-12 w-16 rounded-full border-[12px] border-white" />
+      </div>
+      <div className="absolute bottom-8 right-0 h-32 w-64 rounded-[50%] bg-white shadow-[0_18px_60px_rgba(46,74,61,.16)]">
+        <div className="absolute left-16 top-10 h-8 w-28 rounded-[50%] bg-gold/20" />
+        <div className="absolute right-8 top-8 h-2 w-36 rotate-[-18deg] rounded-full bg-gold" />
       </div>
     </div>
   );

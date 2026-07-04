@@ -27,37 +27,45 @@ export function HomeExperience() {
 }
 
 function Hero() {
-  const words = ["Purity", "in", "Every", "Ritual"];
-
   return (
-    <section className="relative overflow-hidden bg-gradient-to-br from-white via-[#fffaf3] to-[#eef7ef] px-6 pb-14 pt-32 dark:from-charcoal dark:via-[#151515] dark:to-[#13231c]">
-      <div className="absolute inset-0 bg-mandala bg-[length:22px_22px] opacity-[0.045]" />
-      <div className="relative mx-auto grid min-h-[calc(100vh-8rem)] max-w-7xl items-center gap-12 lg:grid-cols-[0.9fr_1.1fr]">
-        <div>
+    <section className="relative overflow-hidden rounded-t-[1.5rem] bg-[radial-gradient(circle_at_70%_20%,rgba(201,161,92,.16),transparent_28%),linear-gradient(105deg,#fffdf8_0%,#ffffff_45%,#f7fbf5_100%)] px-6 pb-14 pt-16 dark:bg-[linear-gradient(105deg,#101510_0%,#151515_45%,#102319_100%)]">
+      <div className="absolute inset-0 bg-mandala bg-[length:24px_24px] opacity-[0.035]" />
+      <div className="absolute -left-14 top-20 text-forest/10 dark:text-gold/10">
+        <Leaf className="h-64 w-64 rotate-45 fill-current" />
+      </div>
+      <div className="absolute -right-12 top-28 text-forest/10 dark:text-gold/10">
+        <Leaf className="h-72 w-72 -rotate-45 fill-current" />
+      </div>
+      <div className="relative mx-auto grid min-h-[650px] max-w-7xl items-center gap-6 lg:grid-cols-[0.82fr_1.18fr]">
+        <div className="z-10 pt-8">
           <motion.p
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            className="mb-5 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.35em] text-gold"
+            className="mb-5 flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.36em] text-[#c4861f]"
           >
-            <Leaf className="h-4 w-4" /> Prabhukul Ayurveda
+            <span className="h-px w-8 bg-gold" /> Prabhukul Ayurveda
           </motion.p>
           <motion.h1
             variants={staggerContainer}
             initial="hidden"
             animate="show"
-            className="max-w-3xl font-serif text-6xl font-semibold leading-[0.92] text-forest dark:text-white md:text-8xl"
+            className="max-w-3xl font-serif text-6xl font-bold leading-[0.92] md:text-8xl"
           >
-            {words.map((word, index) => (
-              <motion.span key={`${word}-${index}`} variants={fadeUp} className="mr-4 inline-block">
-                {word}
-              </motion.span>
-            ))}
+            <motion.span variants={fadeUp} className="block text-forest dark:text-white">Purity in</motion.span>
+            <motion.span variants={fadeUp} className="block bg-gradient-to-r from-[#b17a14] via-gold to-[#8f650f] bg-clip-text text-transparent">
+              Every Ritual
+            </motion.span>
           </motion.h1>
+          <div className="my-7 flex items-center gap-4 text-gold">
+            <span className="h-px w-32 bg-gold" />
+            <Leaf className="h-5 w-5" />
+            <span className="h-px w-32 bg-gold" />
+          </div>
           <motion.p
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.45 }}
-            className="mt-7 max-w-xl text-base leading-8 text-charcoal/70 dark:text-white/70 md:text-lg"
+            className="max-w-xl text-lg leading-8 text-charcoal/75 dark:text-white/70"
           >
             Premium teas, oils and wellness rituals crafted for Indian homes with clean botanicals, honest sourcing and timeless taste.
           </motion.p>
@@ -67,17 +75,26 @@ function Hero() {
             transition={{ delay: 0.6 }}
             className="mt-9 flex flex-wrap gap-4"
           >
-            <Link href="/products" className="rounded-full bg-forest px-7 py-3 font-semibold text-white shadow-glow hover:bg-maroon">
+            <Link href="/products" className="rounded-full bg-forest px-8 py-4 font-semibold text-white shadow-[0_18px_40px_rgba(12,82,38,.18)] hover:bg-maroon">
               Explore Our Teas
+              <Leaf className="ml-2 inline h-4 w-4" />
             </Link>
-            <Link href="/about" className="rounded-full border border-gold/50 bg-white/60 px-7 py-3 font-semibold text-forest backdrop-blur hover:bg-gold/15 dark:bg-white/10 dark:text-white">
+            <Link href="/about" className="rounded-full border border-forest/45 bg-white/70 px-8 py-4 font-semibold text-forest backdrop-blur hover:bg-forest/5 dark:bg-white/10 dark:text-white">
               Know Our Story
             </Link>
           </motion.div>
-          <div className="mt-10 grid gap-3 sm:grid-cols-3">
-            {["100% Natural", "Rich Aroma", "Trusted by Thousands"].map((item) => (
-              <div key={item} className="flex items-center gap-2 rounded-2xl bg-white/75 p-3 text-sm font-semibold text-forest shadow-sm dark:bg-white/10 dark:text-white">
-                <CheckCircle2 className="h-5 w-5 text-gold" /> {item}
+          <div className="mt-10 grid max-w-2xl gap-4 sm:grid-cols-3">
+            {[
+              ["100% Natural", "No Additives"],
+              ["Rich Aroma", "Great Taste"],
+              ["Trusted by", "Thousands"]
+            ].map(([title, text]) => (
+              <div key={title} className="flex items-center gap-3 rounded-xl border border-[#eee6db] bg-white/85 p-4 shadow-[0_14px_36px_rgba(46,74,61,.08)] dark:border-white/10 dark:bg-white/10">
+                <CheckCircle2 className="h-8 w-8 text-forest dark:text-gold" />
+                <div>
+                  <p className="text-sm font-bold text-forest dark:text-white">{title}</p>
+                  <p className="text-xs text-charcoal/65 dark:text-white/60">{text}</p>
+                </div>
               </div>
             ))}
           </div>
