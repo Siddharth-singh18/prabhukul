@@ -28,7 +28,7 @@ export function HomeExperience() {
 
 function Hero() {
   return (
-    <section className="relative overflow-hidden rounded-t-[1.5rem] bg-[radial-gradient(circle_at_70%_20%,rgba(201,161,92,.16),transparent_28%),linear-gradient(105deg,#fffdf8_0%,#ffffff_45%,#f7fbf5_100%)] px-6 pb-14 pt-16 dark:bg-[linear-gradient(105deg,#101510_0%,#151515_45%,#102319_100%)]">
+    <section className="relative overflow-hidden rounded-t-[1.5rem] bg-[radial-gradient(circle_at_70%_20%,rgba(201,161,92,.16),transparent_28%),linear-gradient(105deg,#fffdf8_0%,#ffffff_45%,#f7fbf5_100%)] px-4 pb-12 pt-10 sm:px-6 sm:pt-16 dark:bg-[linear-gradient(105deg,#101510_0%,#151515_45%,#102319_100%)]">
       <div className="absolute inset-0 bg-mandala bg-[length:24px_24px] opacity-[0.035]" />
       <div className="absolute -left-14 top-20 text-forest/10 dark:text-gold/10">
         <Leaf className="h-64 w-64 rotate-45 fill-current" />
@@ -36,8 +36,8 @@ function Hero() {
       <div className="absolute -right-12 top-28 text-forest/10 dark:text-gold/10">
         <Leaf className="h-72 w-72 -rotate-45 fill-current" />
       </div>
-      <div className="relative mx-auto grid min-h-[650px] max-w-7xl items-center gap-6 lg:grid-cols-[0.82fr_1.18fr]">
-        <div className="z-10 pt-8">
+      <div className="relative mx-auto grid max-w-7xl items-center gap-8 lg:min-h-[650px] lg:grid-cols-[0.82fr_1.18fr]">
+        <div className="z-10 pt-4 sm:pt-8">
           <motion.p
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
@@ -49,23 +49,23 @@ function Hero() {
             variants={staggerContainer}
             initial="hidden"
             animate="show"
-            className="max-w-3xl font-serif text-6xl font-bold leading-[0.92] md:text-8xl"
+            className="max-w-3xl font-serif text-5xl font-bold leading-[0.95] sm:text-6xl md:text-8xl"
           >
             <motion.span variants={fadeUp} className="block text-forest dark:text-white">Purity in</motion.span>
             <motion.span variants={fadeUp} className="block bg-gradient-to-r from-[#b17a14] via-gold to-[#8f650f] bg-clip-text text-transparent">
               Every Ritual
             </motion.span>
           </motion.h1>
-          <div className="my-7 flex items-center gap-4 text-gold">
-            <span className="h-px w-32 bg-gold" />
+          <div className="my-5 flex items-center gap-4 text-gold sm:my-7">
+            <span className="h-px w-20 bg-gold sm:w-32" />
             <Leaf className="h-5 w-5" />
-            <span className="h-px w-32 bg-gold" />
+            <span className="h-px w-20 bg-gold sm:w-32" />
           </div>
           <motion.p
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.45 }}
-            className="max-w-xl text-lg leading-8 text-charcoal/75 dark:text-white/70"
+            className="max-w-xl text-base leading-7 text-charcoal/75 sm:text-lg sm:leading-8 dark:text-white/70"
           >
             Premium teas, oils and wellness rituals crafted for Indian homes with clean botanicals, honest sourcing and timeless taste.
           </motion.p>
@@ -73,17 +73,17 @@ function Hero() {
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6 }}
-            className="mt-9 flex flex-wrap gap-4"
+            className="mt-7 flex flex-wrap gap-3 sm:mt-9 sm:gap-4"
           >
-            <Link href="/products" className="rounded-full bg-forest px-8 py-4 font-semibold text-white shadow-[0_18px_40px_rgba(12,82,38,.18)] hover:bg-maroon">
+            <Link href="/products" className="rounded-full bg-forest px-6 py-3 font-semibold text-white shadow-[0_18px_40px_rgba(12,82,38,.18)] hover:bg-maroon sm:px-8 sm:py-4">
               Explore Our Teas
               <Leaf className="ml-2 inline h-4 w-4" />
             </Link>
-            <Link href="/about" className="rounded-full border border-forest/45 bg-white/70 px-8 py-4 font-semibold text-forest backdrop-blur hover:bg-forest/5 dark:bg-white/10 dark:text-white">
+            <Link href="/about" className="rounded-full border border-forest/45 bg-white/70 px-6 py-3 font-semibold text-forest backdrop-blur hover:bg-forest/5 sm:px-8 sm:py-4 dark:bg-white/10 dark:text-white">
               Know Our Story
             </Link>
           </motion.div>
-          <div className="mt-10 grid max-w-2xl gap-4 sm:grid-cols-3">
+          <div className="mt-8 grid max-w-2xl gap-3 sm:mt-10 sm:grid-cols-3 sm:gap-4">
             {[
               ["100% Natural", "No Additives"],
               ["Rich Aroma", "Great Taste"],
@@ -99,7 +99,7 @@ function Hero() {
             ))}
           </div>
         </div>
-        <motion.div initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.3 }}>
+        <motion.div className="relative z-0 w-full" initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.3 }}>
           <HeroProductScene />
         </motion.div>
       </div>
